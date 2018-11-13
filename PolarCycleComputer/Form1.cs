@@ -13,92 +13,63 @@ namespace PolarCycleComputer
 {
     public partial class Form1 : Form
     {
-        private string[] _breaks = new string[100];
-        private string[] _hrData = new string[100];
-        private string[] _param = new string[100];
+        private Dictionary<string, string> _hrData = new Dictionary<string, string>();
+        private Dictionary<string, string> _param = new Dictionary<string, string>();
 
         public Form1()
         {
             InitializeComponent();
         }
         
+        private static string[] SplitString(string text)
+        {
+            var splitString = new string[] { "[Params]", "[Note]", "[IntTimes]", "[IntNotes]",
+                "[ExtraData]", "[LapNames]", "[Summary-123]",
+                "[Summary-TH]", "[HRZones]", "[SwapTimes]", "[Trip]", "[HRData]"};
+
+            var splittedText = text.Split(splitString, StringSplitOptions.RemoveEmptyEntries);
+
+            return splittedText;
+        }
+
+        private static string[] SplitStringByEnter(string text)
+        {
+            return text.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
-                string file = openFileDialog1.FileName;
-                string[] line = File.ReadAllLines(file);
+                _param = new Dictionary<string, string>();
+                string text = File.ReadAllText(openFileDialog1.FileName);
+                var splittedString = SplitString(text);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                for (int i = 0; i < line.Length; i++)
+                var splittedParamsData = SplitStringByEnter(splittedString[0]);
+                
+                foreach (var data in splittedParamsData)
                 {
-                    if (line[i] == "[Params]")
+                    if (data != "\r")
                     {
-                        //_param[i] = line[i];
-                        _param[i] = "Hello";
-                    }
-                    else if (line[i] == "[HRData]")
-                    {
-                        //_hrData[i] = line[i];
-                        _param[i] = "Hello";
+                        string[] parts = data.Split(new[] { "=" }, StringSplitOptions.RemoveEmptyEntries);
+                        _param.Add(parts[0], parts[1]);
                     }
                 }
 
-
-                foreach (var data in _param)
+                foreach (var a in _param)
                 {
-                    Console.WriteLine(data);
+                    Console.WriteLine(a.Key);
                 }
 
-                foreach (var data in _hrData)
-                {
-                    Console.WriteLine(data);
-                }
-                //var index = text.IndexOf("\n");
-                //string[] param = text.Split('param');
-
-
-
-                //string[] parts = text.Split(new[] { "\n", "\r", "\r\n"}, StringSplitOptions.None);
-
-                //for (int i = 0; i < parts.Length; i++)
-                //{
-                //    if (parts[i] != "")
-                //    {
-
-                //        Console.WriteLine("Index {0}, {1}", i, parts[i]);
-                //    }
-                //}
+                lblStartTime.Text = lblStartTime.Text + "= " + _param["StartTime"];
+                lblInterval.Text = lblInterval.Text + "= " + _param["Interval"];
+                lblMonitor.Text = lblMonitor.Text + "= " + _param["Monitor"];
+                lblSMode.Text = lblSMode.Text + "= " + _param["SMode"];
+                lblDate.Text = lblDate.Text + "= " + _param["Date"];
+                lblLength.Text = lblLength.Text + "= " + _param["Length"];
+                lblWeight.Text = lblWeight.Text + "= " + _param["Weight"];
+                
             }
         }
         
