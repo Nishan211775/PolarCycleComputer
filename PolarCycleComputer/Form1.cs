@@ -50,6 +50,7 @@ namespace PolarCycleComputer
             if (result == DialogResult.OK)
             {
                 _param = new Dictionary<string, string>();
+                _hrData = new Dictionary<string, List<string>>();
                 string text = File.ReadAllText(openFileDialog1.FileName);
                 var splittedString = SplitString(text);
 

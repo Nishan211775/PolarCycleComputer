@@ -34,14 +34,14 @@ namespace PolarCycleComputer
 
          public static double FindAverage(List<string> value)
         {
-            double average = 0;
+            int average = 0;
 
             foreach (var data in value)
             {
-                average += average + Convert.ToDouble(data);
+                average += Convert.ToInt16(data);
             }
 
-            return average;
+            return average / value.Count;
         }
 
          public static int FindSum(List<string> list)
@@ -50,7 +50,7 @@ namespace PolarCycleComputer
 
             foreach (var data in list)
             {
-                sum += sum + Convert.ToInt16(data);
+                sum += Convert.ToInt16(data);
             }
 
             return sum;
