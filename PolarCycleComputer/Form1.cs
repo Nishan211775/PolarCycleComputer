@@ -49,6 +49,7 @@ namespace PolarCycleComputer
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
+                Cursor.Current = Cursors.WaitCursor;
                 _param = new Dictionary<string, string>();
                 _hrData = new Dictionary<string, List<string>>();
                 string text = File.ReadAllText(openFileDialog1.FileName);
@@ -66,13 +67,13 @@ namespace PolarCycleComputer
                 }
 
 
-                lblStartTime.Text = lblStartTime.Text + "= " + _param["StartTime"];
-                lblInterval.Text = lblInterval.Text + "= " + _param["Interval"];
-                lblMonitor.Text = lblMonitor.Text + "= " + _param["Monitor"];
-                lblSMode.Text = lblSMode.Text + "= " + _param["SMode"];
-                lblDate.Text = lblDate.Text + "= " + _param["Date"];
-                lblLength.Text = lblLength.Text + "= " + _param["Length"];
-                lblWeight.Text = lblWeight.Text + "= " + _param["Weight"];
+                lblStartTime.Text = "Start Time" + "= " + _param["StartTime"];
+                lblInterval.Text = "Interval" + "= " + _param["Interval"];
+                lblMonitor.Text = "Monitor" + "= " + _param["Monitor"];
+                lblSMode.Text = "SMode" + "= " + _param["SMode"];
+                lblDate.Text = "Date" + "= " + _param["Date"];
+                lblLength.Text = "Length" + "= " + _param["Length"];
+                lblWeight.Text = "Weight" + "= " + _param["Weight"];
 
                 List<string> cadence = new List<string>();
                 List<string> altitude = new List<string>();
@@ -117,6 +118,7 @@ namespace PolarCycleComputer
                 string maximumAltitude = Summary.FindAverage(_hrData["altitude"]).ToString();
 
                 string[] summarydata = new string[] { totalDistanceCovered, averageSpeed, maxSpeed, averageHeartRate, maximumHeartRate, minHeartRate, averagePower, maxPower, averageAltitude, maximumAltitude };
+                dataGridView2.Rows.Clear();
                 dataGridView2.Rows.Add(summarydata);
             }
         }
@@ -140,6 +142,12 @@ namespace PolarCycleComputer
             dataGridView2.Columns[7].Name = "Maximum power";
             dataGridView2.Columns[8].Name = "Average altitude";
             dataGridView2.Columns[9].Name = "Maximum altitude";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            GraphWindow._powerData = _hrData["cadence"];
+            new GraphWindow().Show();
         }
     }
 }
