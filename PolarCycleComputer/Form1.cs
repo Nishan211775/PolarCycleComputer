@@ -13,13 +13,13 @@ namespace PolarCycleComputer
 {
     public partial class Form1 : Form
     {
-        private Dictionary<string, string> _hrData = new Dictionary<string, string>();
+        private Dictionary<string, List<string>> _hrData = new Dictionary<string, List<string>>();
         private Dictionary<string, string> _param = new Dictionary<string, string>();
 
         public Form1()
         {
             InitializeComponent();
-            //InitGrid();
+            InitGrid();
         }
 
         private string[] SplitString(string text)
@@ -64,29 +64,6 @@ namespace PolarCycleComputer
                     }
                 }
 
-                //adding column to datagrid
-                dataGridView1.ColumnCount = 4;
-                dataGridView1.Columns[0].Name = "Cadence";
-                dataGridView1.Columns[1].Name = "Altitude";
-                dataGridView1.Columns[2].Name = "Heart rate";
-                dataGridView1.Columns[2].Name = "Power in watts";
-
-                //adding data for datagrid
-                var splittedHrData = SplitStringByEnter(splittedString[11]);
-                foreach (var data in splittedHrData)
-                {
-                    var value = SplitStringBySpace(data);
-                    if (value.Length >= 4)
-                    {
-                        //_hrData.Add("", "");
-
-                        string[] hrData = new string[] { value[0], value[1], value[2], value[3] };
-                        dataGridView1.Rows.Add(hrData);
-
-                        Console.WriteLine("................................");
-                    }
-                }
-
 
                 lblStartTime.Text = lblStartTime.Text + "= " + _param["StartTime"];
                 lblInterval.Text = lblInterval.Text + "= " + _param["Interval"];
@@ -95,29 +72,73 @@ namespace PolarCycleComputer
                 lblDate.Text = lblDate.Text + "= " + _param["Date"];
                 lblLength.Text = lblLength.Text + "= " + _param["Length"];
                 lblWeight.Text = lblWeight.Text + "= " + _param["Weight"];
-                
 
-                //string[] row = new string[] { "1", "Product 1", "1000" };
-                //dataGridView1.Rows.Add(row);
-                //row = new string[] { "2", "Product 2", "2000" };
-                //dataGridView1.Rows.Add(row);
-                //row = new string[] { "3", "Product 3", "3000" };
-                //dataGridView1.Rows.Add(row);
-                //row = new string[] { "4", "Product 4", "4000" };
-                //dataGridView1.Rows.Add(row);
-                //row = new string[] { "4", "Product 4", "4000" };
-                //dataGridView1.Rows.Add(row);
+                List<string> cadence = new List<string>();
+                List<string> altitude = new List<string>();
+                List<string> heartRate = new List<string>();
+                List<string> watt = new List<string>();
+
+                //adding data for datagrid
+                var splittedHrData = SplitStringByEnter(splittedString[11]);
+                foreach (var data in splittedHrData)
+                {
+                    var value = SplitStringBySpace(data);
+
+                    if (value.Length >= 4)
+                    {
+                        cadence.Add(value[0]);
+                        altitude.Add(value[1]);
+                        heartRate.Add(value[2]);
+                        watt.Add(value[3]);
+
+                        string[] hrData = new string[] { value[0], value[1], value[2], value[3] };
+                        dataGridView1.Rows.Add(hrData);
+                    }
+                }
+
+                _hrData.Add("cadence", cadence);
+                _hrData.Add("altitude", altitude);
+                _hrData.Add("heartRate", heartRate);
+                _hrData.Add("watt", watt);
+
+                string totalDistanceCovered = Summary.FindSum(_hrData["cadence"]).ToString();
+                string averageSpeed = Summary.FindAverage(_hrData["cadence"]).ToString();
+                string maxSpeed = Summary.FindMax(_hrData["cadence"]).ToString();
+
+                string averageHeartRate = Summary.FindAverage(_hrData["heartRate"]).ToString();
+                string maximumHeartRate = Summary.FindMax(_hrData["heartRate"]).ToString();
+                string minHeartRate = Summary.FindMin(_hrData["heartRate"]).ToString();
+
+                string averagePower = Summary.FindAverage(_hrData["watt"]).ToString();
+                string maxPower = Summary.FindMax(_hrData["watt"]).ToString();
+
+                string averageAltitude = Summary.FindAverage(_hrData["altitude"]).ToString();
+                string maximumAltitude = Summary.FindAverage(_hrData["altitude"]).ToString();
+
+                string[] summarydata = new string[] { totalDistanceCovered, averageSpeed, maxSpeed, averageHeartRate, maximumHeartRate, minHeartRate, averagePower, maxPower, averageAltitude, maximumAltitude };
+                dataGridView2.Rows.Add(summarydata);
             }
         }
 
         private void InitGrid()
         {
-            DataTable table = new DataTable();
-            table.Columns.Add(new DataColumn("Cadence"));
-            table.Columns.Add(new DataColumn("Altitude"));
-            table.Columns.Add(new DataColumn("Heart rate"));
-            table.Columns.Add(new DataColumn("Power in watts"));
-            dataGridView1.DataSource = table;
+            dataGridView1.ColumnCount = 4;
+            dataGridView1.Columns[0].Name = "Cadence";
+            dataGridView1.Columns[1].Name = "Altitude";
+            dataGridView1.Columns[2].Name = "Heart rate";
+            dataGridView1.Columns[3].Name = "Power in watts";
+
+            dataGridView2.ColumnCount = 10;
+            dataGridView2.Columns[0].Name = "Total distance covered";
+            dataGridView2.Columns[1].Name = "Average speed";
+            dataGridView2.Columns[2].Name = "Maximum speed";
+            dataGridView2.Columns[3].Name = "Average heart rate";
+            dataGridView2.Columns[4].Name = "Maximum heart rate";
+            dataGridView2.Columns[5].Name = "Minimum heart rate";
+            dataGridView2.Columns[6].Name = "Average power";
+            dataGridView2.Columns[7].Name = "Maximum power";
+            dataGridView2.Columns[8].Name = "Average altitude";
+            dataGridView2.Columns[9].Name = "Maximum altitude";
         }
     }
 }
