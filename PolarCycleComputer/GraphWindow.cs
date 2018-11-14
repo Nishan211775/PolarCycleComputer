@@ -13,7 +13,7 @@ namespace PolarCycleComputer
 {
     public partial class GraphWindow : Form
     {
-        public static List<string> _powerData;
+        public static Dictionary<string, List<string>> _hrData;
         public GraphWindow()
         {
             InitializeComponent();
@@ -55,15 +55,18 @@ namespace PolarCycleComputer
             GraphPane myPane = zedGraphControl1.GraphPane;
 
             // Set the Titles
-            myPane.Title = "Team A vs Team B Goal Analysis for 2014/2015 Season";
-            myPane.XAxis.Title = "Year";
-            myPane.YAxis.Title = "No of Goals";
+            myPane.Title = "Overview";
+            myPane.XAxis.Title = "Time in second";
+            myPane.YAxis.Title = "Data";
+            
             /* myPane.XAxis.Scale.MajorStep = 50;
              myPane.YAxis.Scale.Mag = 0;
              myPane.XAxis.Scale.Max = 1000;*/
 
-            PointPairList teamAPairList = new PointPairList();
-            PointPairList teamBPairList = new PointPairList();
+            PointPairList cadencePairList = new PointPairList();
+            PointPairList altitudePairList = new PointPairList();
+            PointPairList heartPairList = new PointPairList();
+            PointPairList powerPairList = new PointPairList();
 
             //int[] teamAData = buildTeamAData();
             //int[] teamBData = buildTeamBData();
@@ -73,17 +76,37 @@ namespace PolarCycleComputer
             //    teamBPairList.Add(i, teamBData[i]);
             //}
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < _hrData["cadence"].Count; i++)
             {
-                teamAPairList.Add(i, Convert.ToInt16(_powerData.ElementAt(i)));
-                teamBPairList.Add(i, Convert.ToInt16(_powerData.ElementAt(i)) + 12);
+                cadencePairList.Add(i, Convert.ToInt16(_hrData["cadence"][i]));
             }
 
-            LineItem teamACurve = myPane.AddCurve("Team A",
-                   teamAPairList, Color.Red, SymbolType.Diamond);
+            for (int i = 0; i < _hrData["altitude"].Count; i++)
+            {
+                altitudePairList.Add(i, Convert.ToInt16(_hrData["altitude"][i]));
+            }
 
-            LineItem teamBCurve = myPane.AddCurve("Team B",
-                  teamBPairList, Color.Blue, SymbolType.Circle);
+            for (int i = 0; i < _hrData["heartRate"].Count; i++)
+            {
+                heartPairList.Add(i, Convert.ToInt16(_hrData["heartRate"][i]));
+            }
+
+            for (int i = 0; i < _hrData["watt"].Count; i++)
+            {
+                powerPairList.Add(i, Convert.ToInt16(_hrData["watt"][i]));
+            }
+
+            LineItem cadence = myPane.AddCurve("Cadence",
+                   cadencePairList, Color.Red, SymbolType.None);
+
+            LineItem altitude = myPane.AddCurve("Altitude",
+                  altitudePairList, Color.Blue, SymbolType.None);
+
+            LineItem heart = myPane.AddCurve("Heart",
+                   heartPairList, Color.Black, SymbolType.None);
+
+            LineItem power = myPane.AddCurve("Power",
+                  powerPairList, Color.Orange, SymbolType.None);
 
             zedGraphControl1.AxisChange();
         }
