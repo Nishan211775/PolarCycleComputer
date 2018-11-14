@@ -17,11 +17,7 @@ namespace PolarCycleComputer
         public GraphWindow()
         {
             InitializeComponent();
-            //int[] data = _powerData.Select(int.Parse).ToList();
-            //foreach (var data in _powerData)
-            //{
-            //    Console.WriteLine(data);
-            //}
+            this.CenterToScreen();
         }
 
         private void GraphWindow_Load(object sender, EventArgs e)
@@ -29,27 +25,7 @@ namespace PolarCycleComputer
             plotGraph();
             SetSize();
         }
-
-        private int[] buildTeamAData()
-        {
-            int[] goalsScored = new int[10];
-            for (int i = 0; i < 10; i++)
-            {
-                goalsScored[i] = (i + 1) * 10;
-            }
-            return goalsScored;
-        }
-
-        private int[] buildTeamBData()
-        {
-            int[] goalsScored = new int[10];
-            for (int i = 0; i < 10; i++)
-            {
-                goalsScored[i] = (i + 10) * 11;
-            }
-            return goalsScored;
-        }
-
+        
         private void plotGraph()
         {
             GraphPane myPane = zedGraphControl1.GraphPane;

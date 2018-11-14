@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace PolarCycleComputer
         public Form1()
         {
             InitializeComponent();
+            this.CenterToScreen();
             InitGrid();
         }
 
@@ -66,12 +68,15 @@ namespace PolarCycleComputer
                     }
                 }
 
+                DateTime date1 = new DateTime(Convert.ToInt64(_param["Date"]));
+                CultureInfo ci = CultureInfo.InvariantCulture;
+
 
                 lblStartTime.Text = "Start Time" + "= " + _param["StartTime"];
                 lblInterval.Text = "Interval" + "= " + _param["Interval"];
                 lblMonitor.Text = "Monitor" + "= " + _param["Monitor"];
                 lblSMode.Text = "SMode" + "= " + _param["SMode"];
-                lblDate.Text = "Date" + "= " + _param["Date"];
+                lblDate.Text = "Date" + "= " + date1.ToString("yyyy-mm-dd", ci);
                 lblLength.Text = "Length" + "= " + _param["Length"];
                 lblWeight.Text = "Weight" + "= " + _param["Weight"];
 
@@ -146,8 +151,28 @@ namespace PolarCycleComputer
 
         private void button2_Click(object sender, EventArgs e)
         {
-            GraphWindow._hrData = _hrData;
-            new GraphWindow().Show();
+            if (_hrData.Count < 1)
+            {
+                MessageBox.Show("Please select a file first");
+            }
+            else
+            {
+                GraphWindow._hrData = _hrData;
+                new GraphWindow().Show();
+            }
+        }
+        
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            if (_hrData.Count < 1)
+            {
+                MessageBox.Show("Please select a file first");
+            }
+            else
+            {
+                PersonalGraph._hrData = _hrData;
+                new PersonalGraph().Show();
+            }
         }
     }
 }
