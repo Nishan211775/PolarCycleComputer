@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +18,7 @@ namespace PolarCycleComputer
         private Dictionary<string, List<string>> _hrData = new Dictionary<string, List<string>>();
         private Dictionary<string, string> _param = new Dictionary<string, string>();
         private int count = 0;
+        private string endTime;
 
         public Form1()
         {
@@ -69,17 +71,14 @@ namespace PolarCycleComputer
                     }
                 }
 
-                DateTime date1 = new DateTime(Convert.ToInt64(_param["Date"]));
-                CultureInfo ci = CultureInfo.InvariantCulture;
-
-
+                
                 lblStartTime.Text = "Start Time" + "= " + _param["StartTime"];
-                lblInterval.Text = "Interval" + "= " + _param["Interval"];
+                lblInterval.Text = "Interval" + "= " + Regex.Replace(_param["Interval"], @"\t|\n|\r", "") + " sec";
                 lblMonitor.Text = "Monitor" + "= " + _param["Monitor"];
                 lblSMode.Text = "SMode" + "= " + _param["SMode"];
-                lblDate.Text = "Date" + "= " + date1.ToString("yyyy-mm-dd", ci);
+                lblDate.Text = "Date" + "= " + ConvertToDate(_param["Date"]);
                 lblLength.Text = "Length" + "= " + _param["Length"];
-                lblWeight.Text = "Weight" + "= " + _param["Weight"];
+                lblWeight.Text = "Weight" + "= " + Regex.Replace(_param["Weight"], @"\t|\n|\r", "") + " kg";
 
                 List<string> cadence = new List<string>();
                 List<string> altitude = new List<string>();
@@ -107,6 +106,7 @@ namespace PolarCycleComputer
                         speed.Add(value[4]);
                         
                         if (temp > 2) dateTime = dateTime.AddSeconds(Convert.ToInt32(_param["Interval"]));
+                        endTime = dateTime.TimeOfDay.ToString();
 
                         string[] hrData = new string[] { value[0], value[1], value[2], value[3], value[4], dateTime.TimeOfDay.ToString() };
                         dataGridView1.Rows.Add(hrData);
@@ -119,8 +119,14 @@ namespace PolarCycleComputer
                 _hrData.Add("watt", watt);
                 _hrData.Add("speed", speed);
 
-                string totalDistanceCovered = Summary.FindSum(_hrData["cadence"]).ToString();
+                //Total Distance Covered = Average Speed * Total Time;
+
+                double startDate = TimeSpan.Parse(_param["StartTime"]).TotalSeconds;
+                double endDate = TimeSpan.Parse(endTime).TotalSeconds;
+                double totalTime = endDate - startDate;
+                
                 string averageSpeed = Summary.FindAverage(_hrData["cadence"]).ToString();
+                string totalDistanceCovered = (Convert.ToDouble(averageSpeed) * totalTime).ToString();
                 string maxSpeed = Summary.FindMax(_hrData["cadence"]).ToString();
 
                 string averageHeartRate = Summary.FindAverage(_hrData["heartRate"]).ToString();
@@ -137,6 +143,32 @@ namespace PolarCycleComputer
                 dataGridView2.Rows.Clear();
                 dataGridView2.Rows.Add(summarydata);
             }
+        }
+
+        private string ConvertToDate(string date)
+        {
+            string year = "";
+            string month = "";
+            string day = "";
+
+            for (int i = 0; i < 4; i++)
+            {
+                year = year + date[i];
+            };
+
+            for (int i = 4; i < 6; i++)
+            {
+                month = month + date[i];
+            };
+
+            for (int i = 6; i < 8; i++)
+            {
+                day = day + date[i];
+            };
+
+            string convertedDate = year + "-" + month + "-" + day;
+
+            return convertedDate;
         }
 
         private void InitGrid()
@@ -203,6 +235,7 @@ namespace PolarCycleComputer
                     dataGridView1.Columns[4].Name = "Speed(Mile/hr)";
 
                     data.Clear();
+
                     for (int i = 0; i < _hrData["cadence"].Count; i++)
                     {
                         string temp = (Convert.ToDouble(_hrData["speed"][i]) * 1.60934).ToString();
@@ -213,9 +246,11 @@ namespace PolarCycleComputer
                     _hrData["speed"] = data;
 
                     dataGridView1.Rows.Clear();
+                    DateTime dateTime = DateTime.Parse(_param["StartTime"]);
                     for (int i = 0; i < _hrData["cadence"].Count; i++)
                     {
-                        string[] hrData = new string[] { _hrData["cadence"][i], _hrData["altitude"][i], _hrData["heartRate"][i], _hrData["watt"][i], _hrData["speed"][i] };
+                        if (i > 0) dateTime = dateTime.AddSeconds(Convert.ToInt32(_param["Interval"]));
+                        string[] hrData = new string[] { _hrData["cadence"][i], _hrData["altitude"][i], _hrData["heartRate"][i], _hrData["watt"][i], _hrData["speed"][i], dateTime.TimeOfDay.ToString() };
                         dataGridView1.Rows.Add(hrData);
                     }
                 }
@@ -234,9 +269,12 @@ namespace PolarCycleComputer
                     _hrData["speed"] = data;
 
                     dataGridView1.Rows.Clear();
+
+                    DateTime dateTime = DateTime.Parse(_param["StartTime"]);
                     for (int i = 0; i < _hrData["cadence"].Count; i++)
                     {
-                        string[] hrData = new string[] { _hrData["cadence"][i], _hrData["altitude"][i], _hrData["heartRate"][i], _hrData["watt"][i], _hrData["speed"][i] };
+                        if(i > 0) dateTime = dateTime.AddSeconds(Convert.ToInt32(_param["Interval"]));
+                        string[] hrData = new string[] { _hrData["cadence"][i], _hrData["altitude"][i], _hrData["heartRate"][i], _hrData["watt"][i], _hrData["speed"][i], dateTime.TimeOfDay.ToString() };
                         dataGridView1.Rows.Add(hrData);
                     }
                 }
@@ -261,6 +299,7 @@ namespace PolarCycleComputer
 
         private void button5_Click(object sender, EventArgs e)
         {
+            count++;
             CalculateSpeed("km");
         }
     }

@@ -64,19 +64,17 @@
             // 
             // lblStartTime
             // 
-            this.lblStartTime.AutoSize = true;
             this.lblStartTime.Location = new System.Drawing.Point(43, 65);
             this.lblStartTime.Name = "lblStartTime";
-            this.lblStartTime.Size = new System.Drawing.Size(55, 13);
+            this.lblStartTime.Size = new System.Drawing.Size(229, 13);
             this.lblStartTime.TabIndex = 1;
             this.lblStartTime.Text = "Start Time";
             // 
             // lblInterval
             // 
-            this.lblInterval.AutoSize = true;
             this.lblInterval.Location = new System.Drawing.Point(43, 94);
             this.lblInterval.Name = "lblInterval";
-            this.lblInterval.Size = new System.Drawing.Size(42, 13);
+            this.lblInterval.Size = new System.Drawing.Size(229, 13);
             this.lblInterval.TabIndex = 2;
             this.lblInterval.Text = "Interval";
             // 
@@ -118,10 +116,9 @@
             // 
             // lblWeight
             // 
-            this.lblWeight.AutoSize = true;
             this.lblWeight.Location = new System.Drawing.Point(43, 223);
             this.lblWeight.Name = "lblWeight";
-            this.lblWeight.Size = new System.Drawing.Size(41, 13);
+            this.lblWeight.Size = new System.Drawing.Size(229, 13);
             this.lblWeight.TabIndex = 6;
             this.lblWeight.Text = "Weight";
             // 
