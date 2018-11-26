@@ -128,9 +128,9 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(496, 0);
+            this.dataGridView1.Location = new System.Drawing.Point(395, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(595, 410);
+            this.dataGridView1.Size = new System.Drawing.Size(696, 410);
             this.dataGridView1.TabIndex = 7;
             // 
             // dataGridView2
@@ -164,7 +164,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(392, 65);
+            this.label1.Location = new System.Drawing.Point(311, 65);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 13;
@@ -172,7 +172,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(395, 94);
+            this.button4.Location = new System.Drawing.Point(314, 94);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 14;
@@ -182,7 +182,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(395, 124);
+            this.button5.Location = new System.Drawing.Point(314, 124);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 15;

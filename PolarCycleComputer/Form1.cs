@@ -86,11 +86,16 @@ namespace PolarCycleComputer
                 List<string> heartRate = new List<string>();
                 List<string> watt = new List<string>();
                 List<string> speed = new List<string>();
+                List<string> time = new List<string>();
 
                 //adding data for datagrid
                 var splittedHrData = SplitStringByEnter(splittedString[11]);
+                DateTime dateTime = DateTime.Parse(_param["StartTime"]);
+
+                int temp = 0;
                 foreach (var data in splittedHrData)
                 {
+                    temp++;
                     var value = SplitStringBySpace(data);
 
                     if (value.Length >= 5)
@@ -100,8 +105,10 @@ namespace PolarCycleComputer
                         heartRate.Add(value[2]);
                         watt.Add(value[3]);
                         speed.Add(value[4]);
+                        
+                        if (temp > 2) dateTime = dateTime.AddSeconds(Convert.ToInt32(_param["Interval"]));
 
-                        string[] hrData = new string[] { value[0], value[1], value[2], value[3], value[4] };
+                        string[] hrData = new string[] { value[0], value[1], value[2], value[3], value[4], dateTime.TimeOfDay.ToString() };
                         dataGridView1.Rows.Add(hrData);
                     }
                 }
@@ -134,12 +141,13 @@ namespace PolarCycleComputer
 
         private void InitGrid()
         {
-            dataGridView1.ColumnCount = 5;
+            dataGridView1.ColumnCount = 6;
             dataGridView1.Columns[0].Name = "Cadence";
             dataGridView1.Columns[1].Name = "Altitude";
             dataGridView1.Columns[2].Name = "Heart rate";
             dataGridView1.Columns[3].Name = "Power in watts";
             dataGridView1.Columns[4].Name = "Speed(Mile/hr)";
+            dataGridView1.Columns[5].Name = "Time";
 
             dataGridView2.ColumnCount = 10;
             dataGridView2.Columns[0].Name = "Total distance covered";
