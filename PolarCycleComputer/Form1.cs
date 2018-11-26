@@ -16,12 +16,12 @@ namespace PolarCycleComputer
     {
         private Dictionary<string, List<string>> _hrData = new Dictionary<string, List<string>>();
         private Dictionary<string, string> _param = new Dictionary<string, string>();
+        private int count = 0;
 
         public Form1()
         {
             InitializeComponent();
             this.CenterToScreen();
-            this.radioButton1.Checked = true;
             InitGrid();
         }
 
@@ -85,6 +85,7 @@ namespace PolarCycleComputer
                 List<string> altitude = new List<string>();
                 List<string> heartRate = new List<string>();
                 List<string> watt = new List<string>();
+                List<string> speed = new List<string>();
 
                 //adding data for datagrid
                 var splittedHrData = SplitStringByEnter(splittedString[11]);
@@ -98,6 +99,7 @@ namespace PolarCycleComputer
                         altitude.Add(value[1]);
                         heartRate.Add(value[2]);
                         watt.Add(value[3]);
+                        speed.Add(value[4]);
 
                         string[] hrData = new string[] { value[0], value[1], value[2], value[3], value[4] };
                         dataGridView1.Rows.Add(hrData);
@@ -108,6 +110,7 @@ namespace PolarCycleComputer
                 _hrData.Add("altitude", altitude);
                 _hrData.Add("heartRate", heartRate);
                 _hrData.Add("watt", watt);
+                _hrData.Add("speed", speed);
 
                 string totalDistanceCovered = Summary.FindSum(_hrData["cadence"]).ToString();
                 string averageSpeed = Summary.FindAverage(_hrData["cadence"]).ToString();
@@ -136,7 +139,7 @@ namespace PolarCycleComputer
             dataGridView1.Columns[1].Name = "Altitude";
             dataGridView1.Columns[2].Name = "Heart rate";
             dataGridView1.Columns[3].Name = "Power in watts";
-            dataGridView1.Columns[4].Name = "Speed";
+            dataGridView1.Columns[4].Name = "Speed(Mile/hr)";
 
             dataGridView2.ColumnCount = 10;
             dataGridView2.Columns[0].Name = "Total distance covered";
@@ -163,7 +166,7 @@ namespace PolarCycleComputer
                 new GraphWindow().Show();
             }
         }
-        
+
         private void button3_Click_1(object sender, EventArgs e)
         {
             if (_hrData.Count < 1)
@@ -192,51 +195,65 @@ namespace PolarCycleComputer
                     dataGridView1.Columns[4].Name = "Speed(Mile/hr)";
 
                     data.Clear();
-                    for (int i = 0; i < _hrData.Count; i++)
+                    for (int i = 0; i < _hrData["cadence"].Count; i++)
                     {
-                        string temp = (Convert.ToDouble(_hrData["cadence"][i]) / 100).ToString();
+                        string temp = (Convert.ToDouble(_hrData["speed"][i]) * 1.60934).ToString();
                         data.Add(temp);
                     }
 
-                    _hrData["cadence"].Clear();
-                    _hrData["cadence"] = data;
+                    //_hrData["speed"].Clear();
+                    _hrData["speed"] = data;
 
-                    Console.WriteLine(dataGridView1.SelectedCells[0].Value);
-
-                    //dataGridView1.SelectedCells[0].Value = 10.ToString();
-                    //dataGridView1.SelectedCells[1].Value = 10.ToString();
-
-                    //dataGridView1.Update();
-                    //dataGridView1.Refresh();
+                    dataGridView1.Rows.Clear();
+                    for (int i = 0; i < _hrData["cadence"].Count; i++)
+                    {
+                        string[] hrData = new string[] { _hrData["cadence"][i], _hrData["altitude"][i], _hrData["heartRate"][i], _hrData["watt"][i], _hrData["speed"][i] };
+                        dataGridView1.Rows.Add(hrData);
+                    }
                 }
                 else
                 {
                     dataGridView1.Columns[4].Name = "Speed(km/hr)";
 
                     data.Clear();
-                    for (int i = 0; i < _hrData.Count; i++)
+                    for (int i = 0; i < _hrData["cadence"].Count; i++)
                     {
-                        string temp = (Convert.ToDouble(_hrData["cadence"][i]) / 1.5).ToString();
+                        string temp = (Convert.ToDouble(_hrData["speed"][i]) / 1.60934).ToString();
                         data.Add(temp);
                     }
 
-                    _hrData["cadence"].Clear();
-                    _hrData["cadence"] = data;
+                    //_hrData["speed"].Clear();
+                    _hrData["speed"] = data;
 
-                    dataGridView1.Update();
-                    dataGridView1.Refresh();
+                    dataGridView1.Rows.Clear();
+                    for (int i = 0; i < _hrData["cadence"].Count; i++)
+                    {
+                        string[] hrData = new string[] { _hrData["cadence"][i], _hrData["altitude"][i], _hrData["heartRate"][i], _hrData["watt"][i], _hrData["speed"][i] };
+                        dataGridView1.Rows.Add(hrData);
+                    }
                 }
             }
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            CalculateSpeed("km");
+            
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            CalculateSpeed("mile");
+            
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            count++;
+            if (count > 1) CalculateSpeed("mile");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            CalculateSpeed("km");
         }
     }
 }
