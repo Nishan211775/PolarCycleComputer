@@ -18,6 +18,12 @@ namespace PolarCycleComputer
         {
             InitializeComponent();
             this.CenterToScreen();
+            zedGraphControl1.Visible = true;
+            zedGraphControl2.Visible = false;
+            zedGraphControl3.Visible = false;
+            zedGraphControl4.Visible = false;
+
+            this.radioButton2.Checked = true;
             plotGraph();
         }
 
@@ -118,6 +124,38 @@ namespace PolarCycleComputer
         private void PersonalGraph_Resize(object sender, EventArgs e)
         {
             //SetSize();
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            zedGraphControl1.Visible = true;
+            zedGraphControl2.Visible = false;
+            zedGraphControl3.Visible = false;
+            zedGraphControl4.Visible = false;
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            zedGraphControl1.Visible = false;
+            zedGraphControl2.Visible = true;
+            zedGraphControl3.Visible = false;
+            zedGraphControl4.Visible = false;
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            zedGraphControl1.Visible = false;
+            zedGraphControl2.Visible = false;
+            zedGraphControl3.Visible = true;
+            zedGraphControl4.Visible = false;
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+            zedGraphControl1.Visible = false;
+            zedGraphControl2.Visible = false;
+            zedGraphControl3.Visible = false;
+            zedGraphControl4.Visible = true;
         }
     }
 }
