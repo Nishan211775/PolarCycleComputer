@@ -115,7 +115,6 @@ namespace PolarCycleComputer
                         if (temp > 2) dateTime = dateTime.AddSeconds(Convert.ToInt32(_param["Interval"]));
                         endTime = dateTime.TimeOfDay.ToString();
 
-                        //string[] hrData = new string[] { value[0], value[1], value[2], value[3], value[4], dateTime.TimeOfDay.ToString() };
                         List<string> hrData = new List<string>();
                         hrData.Add(value[0]);
                         hrData.Add(value[1]);
@@ -150,22 +149,14 @@ namespace PolarCycleComputer
                 {
                     dataGridView1.Columns[4].Visible = false;
                 }
- 
-
-                //Total Distance Covered = Average Speed * Total Time;
-                //smode.ForEach(res =>
-                //{
-                //    Console.WriteLine(res);
-                //});
-
 
                 double startDate = TimeSpan.Parse(_param["StartTime"]).TotalSeconds;
                 double endDate = TimeSpan.Parse(endTime).TotalSeconds;
                 double totalTime = endDate - startDate;
-                
-                string averageSpeed = Summary.FindAverage(_hrData["cadence"]).ToString();
+
+                string averageSpeed = Summary.FindAverage(_hrData["speed"]).ToString();
                 string totalDistanceCovered = (Convert.ToDouble(averageSpeed) * totalTime).ToString();
-                string maxSpeed = Summary.FindMax(_hrData["cadence"]).ToString();
+                string maxSpeed = Summary.FindMax(_hrData["speed"]).ToString();
 
                 string averageHeartRate = Summary.FindAverage(_hrData["heartRate"]).ToString();
                 string maximumHeartRate = Summary.FindMax(_hrData["heartRate"]).ToString();
@@ -182,6 +173,7 @@ namespace PolarCycleComputer
                 dataGridView2.Rows.Add(summarydata);
             }
         }
+
 
         private string ConvertToDate(string date)
         {
@@ -212,24 +204,24 @@ namespace PolarCycleComputer
         private void InitGrid()
         {
             dataGridView1.ColumnCount = 6;
-            dataGridView1.Columns[0].Name = "Cadence";
-            dataGridView1.Columns[1].Name = "Altitude";
-            dataGridView1.Columns[2].Name = "Heart rate";
-            dataGridView1.Columns[3].Name = "Power in watts";
+            dataGridView1.Columns[0].Name = "Cadence(RPM)";
+            dataGridView1.Columns[1].Name = "Altitude(m/ft)";
+            dataGridView1.Columns[2].Name = "Heart rate(bpm)";
+            dataGridView1.Columns[3].Name = "Power(watt)";
             dataGridView1.Columns[4].Name = "Speed(Mile/hr)";
             dataGridView1.Columns[5].Name = "Time";
 
             dataGridView2.ColumnCount = 10;
             dataGridView2.Columns[0].Name = "Total distance covered";
-            dataGridView2.Columns[1].Name = "Average speed";
-            dataGridView2.Columns[2].Name = "Maximum speed";
-            dataGridView2.Columns[3].Name = "Average heart rate";
-            dataGridView2.Columns[4].Name = "Maximum heart rate";
-            dataGridView2.Columns[5].Name = "Minimum heart rate";
-            dataGridView2.Columns[6].Name = "Average power";
-            dataGridView2.Columns[7].Name = "Maximum power";
-            dataGridView2.Columns[8].Name = "Average altitude";
-            dataGridView2.Columns[9].Name = "Maximum altitude";
+            dataGridView2.Columns[1].Name = "Average speed(km/hr)";
+            dataGridView2.Columns[2].Name = "Maximum speed(km/hr)";
+            dataGridView2.Columns[3].Name = "Average heart rate(bpm)";
+            dataGridView2.Columns[4].Name = "Maximum heart rate(bpm)";
+            dataGridView2.Columns[5].Name = "Minimum heart rate(bpm)";
+            dataGridView2.Columns[6].Name = "Average power(watt)";
+            dataGridView2.Columns[7].Name = "Maximum power(watt)";
+            dataGridView2.Columns[8].Name = "Average altitude(RPM)";
+            dataGridView2.Columns[9].Name = "Maximum altitude(RPM)";
             
         }
 
@@ -277,7 +269,7 @@ namespace PolarCycleComputer
 
                     for (int i = 0; i < _hrData["cadence"].Count; i++)
                     {
-                        string temp = (Convert.ToDouble(_hrData["speed"][i]) * 1.60934).ToString();
+                        string temp = (Convert.ToDouble(_hrData["speed"][i]) / 1.60934).ToString();
                         data.Add(temp);
                     }
 
@@ -300,7 +292,7 @@ namespace PolarCycleComputer
                     data.Clear();
                     for (int i = 0; i < _hrData["cadence"].Count; i++)
                     {
-                        string temp = (Convert.ToDouble(_hrData["speed"][i]) / 1.60934).ToString();
+                        string temp = (Convert.ToDouble(_hrData["speed"][i]) * 1.60934).ToString();
                         data.Add(temp);
                     }
 
