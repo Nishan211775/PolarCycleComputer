@@ -22,6 +22,7 @@ namespace PolarCycleComputer
             zedGraphControl2.Visible = false;
             zedGraphControl3.Visible = false;
             zedGraphControl4.Visible = false;
+            zedGraphControl5.Visible = false;
 
             this.radioButton2.Checked = true;
             plotGraph();
@@ -29,16 +30,16 @@ namespace PolarCycleComputer
 
         private void plotGraph()
         {
-            GraphPane speedPane = zedGraphControl1.GraphPane;
+            GraphPane altitudePane = zedGraphControl1.GraphPane;
             GraphPane heartRatePane = zedGraphControl2.GraphPane;
             GraphPane cadencePane = zedGraphControl3.GraphPane;
             GraphPane powerPane = zedGraphControl4.GraphPane;
-
+            GraphPane speedPane = zedGraphControl5.GraphPane;
 
             // Set the Titles
-            speedPane.Title = "Overview";
-            speedPane.XAxis.Title = "Time in second";
-            speedPane.YAxis.Title = "Data";
+            altitudePane.Title = "Overview";
+            altitudePane.XAxis.Title = "Time in second";
+            altitudePane.YAxis.Title = "Data";
 
             heartRatePane.Title = "Overview";
             heartRatePane.XAxis.Title = "Time in second";
@@ -52,10 +53,15 @@ namespace PolarCycleComputer
             powerPane.XAxis.Title = "Time in second";
             powerPane.YAxis.Title = "Data";
 
+            speedPane.Title = "Overview";
+            speedPane.XAxis.Title = "Time in second";
+            speedPane.YAxis.Title = "Data";
+
             PointPairList cadencePairList = new PointPairList();
             PointPairList altitudePairList = new PointPairList();
             PointPairList heartPairList = new PointPairList();
             PointPairList powerPairList = new PointPairList();
+            PointPairList speeedPairList = new PointPairList();
 
 
             for (int i = 0; i < _hrData["cadence"].Count; i++)
@@ -78,11 +84,15 @@ namespace PolarCycleComputer
                 powerPairList.Add(i, Convert.ToInt16(_hrData["watt"][i]));
             }
 
+            for (int i = 0; i < _hrData["speed"].Count; i++)
+            {
+                speeedPairList.Add(i, Convert.ToDouble(_hrData["speed"][i]));
+            }
+
             LineItem cadence = cadencePane.AddCurve("Cadence",
                    cadencePairList, Color.Red, SymbolType.None);
-            //cadence.Symbol.Fill = new Fill(new Color[] { Color.Blue, Color.Green, Color.Red });
 
-            LineItem altitude = speedPane.AddCurve("Altitude",
+            LineItem altitude = altitudePane.AddCurve("Altitude",
                   altitudePairList, Color.Blue, SymbolType.None);
 
             LineItem heart = heartRatePane.AddCurve("Heart",
@@ -91,10 +101,14 @@ namespace PolarCycleComputer
             LineItem power = powerPane.AddCurve("Power",
                   powerPairList, Color.Orange, SymbolType.None);
 
+            LineItem speed = speedPane.AddCurve("Speed",
+                  speeedPairList, Color.Red, SymbolType.None);
+
             zedGraphControl1.AxisChange();
             zedGraphControl2.AxisChange();
             zedGraphControl3.AxisChange();
             zedGraphControl4.AxisChange();
+            zedGraphControl5.AxisChange();
         }
 
         private void SetSize()
@@ -132,6 +146,7 @@ namespace PolarCycleComputer
             zedGraphControl2.Visible = false;
             zedGraphControl3.Visible = false;
             zedGraphControl4.Visible = false;
+            zedGraphControl5.Visible = false;
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
@@ -140,6 +155,7 @@ namespace PolarCycleComputer
             zedGraphControl2.Visible = true;
             zedGraphControl3.Visible = false;
             zedGraphControl4.Visible = false;
+            zedGraphControl5.Visible = false;
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
@@ -148,6 +164,7 @@ namespace PolarCycleComputer
             zedGraphControl2.Visible = false;
             zedGraphControl3.Visible = true;
             zedGraphControl4.Visible = false;
+            zedGraphControl5.Visible = false;
         }
 
         private void radioButton5_CheckedChanged(object sender, EventArgs e)
@@ -156,6 +173,16 @@ namespace PolarCycleComputer
             zedGraphControl2.Visible = false;
             zedGraphControl3.Visible = false;
             zedGraphControl4.Visible = true;
+            zedGraphControl5.Visible = false;
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            zedGraphControl1.Visible = false;
+            zedGraphControl2.Visible = false;
+            zedGraphControl3.Visible = false;
+            zedGraphControl4.Visible = false;
+            zedGraphControl5.Visible = true;
         }
     }
 }

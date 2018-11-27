@@ -19,6 +19,7 @@ namespace PolarCycleComputer
         private Dictionary<string, string> _param = new Dictionary<string, string>();
         private int count = 0;
         private string endTime;
+        private List<int> smode = new List<int>();
 
         public Form1()
         {
@@ -80,6 +81,12 @@ namespace PolarCycleComputer
                 lblLength.Text = "Length" + "= " + _param["Length"];
                 lblWeight.Text = "Weight" + "= " + Regex.Replace(_param["Weight"], @"\t|\n|\r", "") + " kg";
 
+                var sMode = _param["SMode"];
+                for (int i = 0; i < sMode.Length; i++)
+                {
+                    smode.Add((int)Char.GetNumericValue(_param["SMode"][i]));
+                }
+
                 List<string> cadence = new List<string>();
                 List<string> altitude = new List<string>();
                 List<string> heartRate = new List<string>();
@@ -108,8 +115,16 @@ namespace PolarCycleComputer
                         if (temp > 2) dateTime = dateTime.AddSeconds(Convert.ToInt32(_param["Interval"]));
                         endTime = dateTime.TimeOfDay.ToString();
 
-                        string[] hrData = new string[] { value[0], value[1], value[2], value[3], value[4], dateTime.TimeOfDay.ToString() };
-                        dataGridView1.Rows.Add(hrData);
+                        //string[] hrData = new string[] { value[0], value[1], value[2], value[3], value[4], dateTime.TimeOfDay.ToString() };
+                        List<string> hrData = new List<string>();
+                        hrData.Add(value[0]);
+                        hrData.Add(value[1]);
+                        hrData.Add(value[2]);
+                        hrData.Add(value[3]);
+                        hrData.Add(value[4]);
+                        hrData.Add(dateTime.TimeOfDay.ToString());
+
+                        dataGridView1.Rows.Add(hrData.ToArray());
                     }
                 }
 
@@ -119,7 +134,30 @@ namespace PolarCycleComputer
                 _hrData.Add("watt", watt);
                 _hrData.Add("speed", speed);
 
+                if (smode[0] == 0)
+                {
+                    dataGridView1.Columns[0].Visible = false;
+                } else if (smode[1] == 0)
+                {
+                    dataGridView1.Columns[1].Visible = false;
+                } else if (smode[2] == 0)
+                {
+                    dataGridView1.Columns[2].Visible = false;
+                } else if (smode[3] == 0)
+                {
+                    dataGridView1.Columns[3].Visible = false;
+                } else if (smode[4] == 0)
+                {
+                    dataGridView1.Columns[4].Visible = false;
+                }
+ 
+
                 //Total Distance Covered = Average Speed * Total Time;
+                //smode.ForEach(res =>
+                //{
+                //    Console.WriteLine(res);
+                //});
+
 
                 double startDate = TimeSpan.Parse(_param["StartTime"]).TotalSeconds;
                 double endDate = TimeSpan.Parse(endTime).TotalSeconds;
@@ -192,6 +230,7 @@ namespace PolarCycleComputer
             dataGridView2.Columns[7].Name = "Maximum power";
             dataGridView2.Columns[8].Name = "Average altitude";
             dataGridView2.Columns[9].Name = "Maximum altitude";
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
