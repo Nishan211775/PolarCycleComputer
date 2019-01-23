@@ -45,6 +45,8 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -130,6 +132,9 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(696, 410);
             this.dataGridView1.TabIndex = 7;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            this.dataGridView1.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataGridView1_RowStateChanged);
             // 
             // dataGridView2
             // 
@@ -190,7 +195,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(106, 387);
+            this.button6.Location = new System.Drawing.Point(12, 387);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(130, 23);
             this.button6.TabIndex = 16;
@@ -198,11 +203,33 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(269, 387);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(106, 23);
+            this.button7.TabIndex = 17;
+            this.button7.Text = "Selection Result";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(166, 387);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 18;
+            this.button8.Text = "Reset Selection";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1103, 547);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -248,6 +275,8 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
     private System.Windows.Forms.Button button6;
+    private System.Windows.Forms.Button button7;
+    private System.Windows.Forms.Button button8;
   }
 }
 
