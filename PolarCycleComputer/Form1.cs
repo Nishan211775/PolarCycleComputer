@@ -213,26 +213,7 @@ namespace PolarCycleComputer
 
     private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
     {
-      //if (dataGridView1.SelectedCells.Count == 6)
-      //{
-      //  foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-      //  {
-      //    //string cadence = dataGridView1.SelectedCells[0].Value.ToString();
-      //    //string altitude = dataGridView1.SelectedCells[1].Value.ToString();
-      //    //string heartRate = dataGridView1.SelectedCells[2].Value.ToString();
-      //    //string power = dataGridView1.SelectedCells[3].Value.ToString();
-      //    //string speed = dataGridView1.SelectedCells[4].Value.ToString();
-      //    //string time = dataGridView1.SelectedCells[5].Value.ToString();
-
-      //    MessageBox.Show(row.Index.ToString());
-      //  }
-
-
-
-      //  //MessageBox.Show(cadence + "/" + altitude + "/" + heartRate + "/" + power + "/" + speed + "/" + time);
-      //  //string id = dataGridView1.SelectedCells[0].Value.ToString();
-      //  //MessageBox.Show(id);
-      //}
+      
     }
 
     private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -308,7 +289,9 @@ namespace PolarCycleComputer
 
     private void button9_Click(object sender, EventArgs e)
     {
-      //new IntervalDetection().DetectInterval(_hrData.ToDictionary(k => k.Key, k => k.Value as object));
+      //_hrData.ToDictionary(k => k.Key, k => k.Value as object
+      var data = _hrData.ToDictionary(k => k.Key, k => k.Value as object);
+      new IntervalDetectionForm(data).Show();
     }
   }
 }

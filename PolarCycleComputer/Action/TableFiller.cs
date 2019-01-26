@@ -11,8 +11,18 @@ namespace PolarCycleComputer.Action
   {
     public string[] FillDataInSumaryTable(Dictionary<string, object> _hrData, string endTime, Dictionary<string, string> _param = null)
     {
-      double startDate = TimeSpan.Parse(_param["StartTime"]).TotalSeconds;
-      double endDate = TimeSpan.Parse(endTime).TotalSeconds;
+      //double startDate = TimeSpan.Parse(_param["StartTime"]).TotalSeconds;
+      double startDate = 0;
+
+      try
+      {
+        startDate = TimeSpan.Parse(_param["StartTime"]).TotalSeconds;
+      } catch(Exception e)
+      {
+        startDate = 0;
+      }
+
+      double endDate = !string.IsNullOrEmpty(endTime) ? TimeSpan.Parse(endTime).TotalSeconds : 0; 
       double totalTime = endDate - startDate;
 
       string averageSpeed = Summary.FindAverage(_hrData["speed"] as List<string>).ToString();

@@ -65,6 +65,12 @@
     <Compile Include="GraphWindow.Designer.cs">
       <DependentUpon>GraphWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="IntervalDetectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntervalDetectionForm.Designer.cs">
+      <DependentUpon>IntervalDetectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PersonalGraph.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GraphWindow.resx">
       <DependentUpon>GraphWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntervalDetectionForm.resx">
+      <DependentUpon>IntervalDetectionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PersonalGraph.resx">
       <DependentUpon>PersonalGraph.cs</DependentUpon>
