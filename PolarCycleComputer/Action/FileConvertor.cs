@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PolarCycleComputer.Action
 {
-  class FileConvertor
+  public class FileConvertor
   {
     public string[] SplitString(string text)
     {

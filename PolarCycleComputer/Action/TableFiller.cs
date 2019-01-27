@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace PolarCycleComputer.Action
 {
-  class TableFiller
+  public class TableFiller
   {
     public string[] FillDataInSumaryTable(Dictionary<string, object> _hrData, string endTime, Dictionary<string, string> _param = null)
     {
@@ -17,12 +17,13 @@ namespace PolarCycleComputer.Action
       try
       {
         startDate = TimeSpan.Parse(_param["StartTime"]).TotalSeconds;
-      } catch(Exception e)
+      }
+      catch (Exception e)
       {
         startDate = 0;
       }
 
-      double endDate = !string.IsNullOrEmpty(endTime) ? TimeSpan.Parse(endTime).TotalSeconds : 0; 
+      double endDate = !string.IsNullOrEmpty(endTime) ? TimeSpan.Parse(endTime).TotalSeconds : 0;
       double totalTime = endDate - startDate;
 
       string averageSpeed = Summary.FindAverage(_hrData["speed"] as List<string>).ToString();
