@@ -8,6 +8,11 @@ namespace PolarCycleComputer
 {
   public class Summary
   {
+    /// <summary>
+    /// finds the maximum value from array
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static int FindMax(List<string> value)
     {
       int maxValue = 0;
@@ -20,6 +25,11 @@ namespace PolarCycleComputer
       return maxValue;
     }
 
+    /// <summary>
+    /// finds the minimum value from array
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static int FindMin(List<string> value)
     {
       int minValue = Convert.ToInt16(value.ElementAt(0));
@@ -32,6 +42,11 @@ namespace PolarCycleComputer
       return minValue;
     }
 
+    /// <summary>
+    /// finds average of array's value
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static double FindAverage(List<string> value)
     {
       int average = 0;
@@ -44,6 +59,11 @@ namespace PolarCycleComputer
       return average / value.Count;
     }
 
+    /// <summary>
+    /// calculate the sum of an array
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
     public static double FindSum(List<string> list)
     {
       double sum = 0;
@@ -56,6 +76,11 @@ namespace PolarCycleComputer
       return sum;
     }
 
+    /// <summary>
+    /// converts date into corrected format
+    /// </summary>
+    /// <param name="date"></param>
+    /// <returns></returns>
     public static string ConvertToDate(string date)
     {
       string year = "";
@@ -82,6 +107,12 @@ namespace PolarCycleComputer
       return convertedDate;
     }
 
+    /// <summary>
+    /// rounds the double value uptp nth position
+    /// </summary>
+    /// <param name="input"></param>
+    /// <param name="places"></param>
+    /// <returns></returns>
     public static double RoundUp(double input, int places)
     {
       double multiplier = Math.Pow(10, Convert.ToDouble(places));

@@ -8,7 +8,11 @@ namespace PolarCycleComputer.Action
 {
   class IntervalDetection
   {
-
+    /// <summary>
+    /// detects the total no of interval and return as a form of array
+    /// </summary>
+    /// <param name="_hrData"></param>
+    /// <returns></returns>
     public Dictionary<string, object> GetIntervalDetectedData(Dictionary<string, object> _hrData)
     {
       var splittingString = GetSplittedString(_hrData);
@@ -64,6 +68,12 @@ namespace PolarCycleComputer.Action
       return list;
     }
 
+
+    /// <summary>
+    /// detects interval from file
+    /// </summary>
+    /// <param name="_hrData"></param>
+    /// <returns></returns>
     public List<string> GetSplittedString(Dictionary<string, object> _hrData)
     {
       var speedData = _hrData["speed"] as List<string>;

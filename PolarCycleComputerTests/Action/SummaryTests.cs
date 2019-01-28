@@ -11,6 +11,9 @@ namespace PolarCycleComputer.Tests
   [TestClass()]
   public class SummaryTests
   {
+    /// <summary>
+    /// Testing whether the method finds the maximum value from arraylist or not
+    /// </summary>
     [TestMethod()]
     public void FindMaxTest()
     {
@@ -18,6 +21,9 @@ namespace PolarCycleComputer.Tests
       Assert.AreEqual(18, maxValue);
     }
 
+    /// <summary>
+    /// Testing whether the method finds the minimum value from arraylist or not
+    /// </summary>
     [TestMethod()]
     public void FindMinTest()
     {
@@ -25,6 +31,9 @@ namespace PolarCycleComputer.Tests
       Assert.AreEqual(4, val);
     }
 
+    /// <summary>
+    /// Testing whether the method finds the average value of arraylist or not
+    /// </summary>
     [TestMethod()]
     public void FindAverageTest()
     {
@@ -32,13 +41,19 @@ namespace PolarCycleComputer.Tests
       Assert.AreEqual(12, val);
     }
 
+    /// <summary>
+    /// Testing whether the method finds the total value of arraylist or not
+    /// </summary>
     [TestMethod()]
     public void FindSumTest()
     {
-      int val = Summary.FindSum(new List<string> { "15", "10", "4", "18", "16" });
+      double val = Summary.FindSum(new List<string> { "15", "10", "4", "18", "16" });
       Assert.AreEqual(63, val);
     }
 
+    /// <summary>
+    /// Testing whether the method converts a string into formatted date or not
+    /// </summary>
     [TestMethod()]
     public void ConvertToDate()
     {

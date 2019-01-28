@@ -11,6 +11,9 @@ namespace PolarCycleComputer.Action.Tests
   [TestClass()]
   public class FileConvertorTests
   {
+    /// <summary>
+    /// Testing whether the method splitted string by line break or not
+    /// </summary>
     [TestMethod()]
     public void SplitStringByEnterTest()
     {
@@ -20,6 +23,9 @@ namespace PolarCycleComputer.Action.Tests
       CollectionAssert.AreEqual(new string[] { "01 12 15 23", "14 14 05 23" }, splittedString);
     }
 
+    /// <summary>
+    /// Testing whether the method splitted string space or not
+    /// </summary>
     [TestMethod()]
     public void SplitStringBySpaceTest()
     {

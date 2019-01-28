@@ -23,8 +23,7 @@ namespace PolarCycleComputer
       {
         comboBox1.Items.Add("Interval " + (i + 1));
       }
-
-      //dataGridView2.Rows.Add(new TableFiller().FillDataInSumaryTable(hrData, hrData["endTime"] as string, hrData["params"] as Dictionary<string, string>));
+      
     }
 
     private void IntervalDetectionForm_Load(object sender, EventArgs e)
@@ -32,6 +31,7 @@ namespace PolarCycleComputer
       InitGrid();
     }
 
+    //initializing datagrid row
     private void InitGrid()
     {
       dataGridView2.ColumnCount = 10;

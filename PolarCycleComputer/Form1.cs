@@ -42,7 +42,7 @@ namespace PolarCycleComputer
 
         var metricsCalculation = new AdvanceMetricsCalculation();
 
-        //advance mettrics calculation
+        //advance metrics calculation
         double np = metricsCalculation.CalculateNormalizedPower(hrData);
         label3.Text = "Normalized power = " + Summary.RoundUp(np, 2);
 
@@ -56,12 +56,13 @@ namespace PolarCycleComputer
         label2.Text = "Power balance = " + Summary.RoundUp(pb, 2);
 
         var param = hrData["params"] as Dictionary<string, string>;
+
         //header file
         lblStartTime.Text = lblStartTime.Text + "= " + param["StartTime"];
         lblInterval.Text = lblInterval.Text + "= " + param["Interval"];
         lblMonitor.Text = lblMonitor.Text + "= " + param["Monitor"];
         lblSMode.Text = lblSMode.Text + "= " + param["SMode"];
-        lblDate.Text = lblDate.Text + "= " + param["Date"];
+        lblDate.Text = lblDate.Text + "= " + Summary.ConvertToDate(param["Date"]);
         lblLength.Text = lblLength.Text + "= " + param["Length"];
         lblWeight.Text = lblWeight.Text + "= " + param["Weight"];
 
@@ -96,10 +97,12 @@ namespace PolarCycleComputer
         }
 
         dataGridView2.Rows.Clear();
+        //adding value to datagrid
         dataGridView2.Rows.Add(new TableFiller().FillDataInSumaryTable(hrData, hrData["endTime"] as string, hrData["params"] as Dictionary<string, string>));
       }
     }
 
+    //initializing grid header data
     private void InitGrid()
     {
       dataGridView1.ColumnCount = 6;
@@ -155,6 +158,10 @@ namespace PolarCycleComputer
 
     }
 
+    /// <summary>
+    /// converts mile into km and km into mile
+    /// </summary>
+    /// <param name="type"></param>
     private void CalculateSpeed(string type)
     {
       if (_hrData.Count > 0)
