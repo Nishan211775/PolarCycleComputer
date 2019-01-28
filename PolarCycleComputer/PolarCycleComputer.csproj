@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\AdvanceMetricsCalculation.cs" />
     <Compile Include="Action\FileConvertor.cs" />
     <Compile Include="Action\IntervalDetection.cs" />
     <Compile Include="Action\TableFiller.cs" />

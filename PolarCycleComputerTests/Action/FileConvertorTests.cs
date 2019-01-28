@@ -27,6 +27,6 @@ namespace PolarCycleComputer.Action.Tests
       string[] splittedString = fileConvertor.SplitStringBySpace("01 12 15 23");
 
       CollectionAssert.AreEqual(new string[] { "01", "12", "15", "23" }, splittedString);
-    }
+    } 
   }
 }

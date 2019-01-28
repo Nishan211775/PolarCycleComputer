@@ -40,6 +40,22 @@ namespace PolarCycleComputer
         Dictionary<string, object> hrData = new TableFiller().FillTable(text, dataGridView1);
         _hrData = hrData.ToDictionary(k => k.Key, k => k.Value as List<string>);
 
+        var metricsCalculation = new AdvanceMetricsCalculation();
+        
+        //advance mettrics calculation
+        double np = metricsCalculation.CalculateNormalizedPower(hrData);
+        label3.Text = "Normalized power = " + Summary.RoundUp(np, 2);
+
+        double ftp = metricsCalculation.CalculateFunctionalThresholdPower(hrData);
+        label4.Text = "Training Stress Score = " + Summary.RoundUp(ftp, 2);
+
+        double ifa = metricsCalculation.CalculateIntensityFactor(hrData);
+        label5.Text = "Intensity Factor = " + Summary.RoundUp(ifa, 2);
+
+        double pb = metricsCalculation.CalculatePowerBalance(hrData);
+        label2.Text = "Power balance = " + Summary.RoundUp(pb, 2);
+
+        //smode calculation
         var param = hrData["params"] as Dictionary<string, string>;
         var sMode = param["SMode"];
         for (int i = 0; i < sMode.Length; i++)

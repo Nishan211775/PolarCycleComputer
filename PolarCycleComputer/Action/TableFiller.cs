@@ -72,12 +72,12 @@ namespace PolarCycleComputer.Action
       List<string> heartRate = new List<string>();
       List<string> watt = new List<string>();
       List<string> speed = new List<string>();
+      List<string> time = new List<string>();
       string endTime = "";
 
       DateTime dateTime = DateTime.Parse(param["StartTime"]);
 
 
-      int temp = 0;
       foreach (var data in splittedHrData)
       {
         var value = c.SplitStringBySpace(data);
@@ -89,8 +89,9 @@ namespace PolarCycleComputer.Action
           watt.Add(value[3]);
           speed.Add(value[4]);
           int interval = Convert.ToInt32(param["Interval"]);
-          if (temp > 2) dateTime = dateTime.AddSeconds(Convert.ToInt32(param["Interval"]));
+          dateTime = dateTime.AddSeconds(Convert.ToInt32(param["Interval"]));
           endTime = dateTime.TimeOfDay.ToString();
+          time.Add(endTime);
 
           List<string> tableData = new List<string>();
           tableData.Add(value[0]);
@@ -109,6 +110,7 @@ namespace PolarCycleComputer.Action
       _hrData.Add("heartRate", heartRate);
       _hrData.Add("watt", watt);
       _hrData.Add("speed", speed);
+      _hrData.Add("time", time);
       _hrData.Add("dateTime", dateTime);
       _hrData.Add("endTime", endTime);
       _hrData.Add("params", param);
