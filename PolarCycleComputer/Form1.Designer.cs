@@ -1,4 +1,4 @@
-﻿namespace PolarCycleComputer
+namespace PolarCycleComputer
 {
     partial class Form1
     {
@@ -52,6 +52,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -200,9 +203,9 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(12, 387);
+            this.button6.Location = new System.Drawing.Point(269, 279);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(130, 23);
+            this.button6.Size = new System.Drawing.Size(100, 23);
             this.button6.TabIndex = 16;
             this.button6.Text = "Compare File";
             this.button6.UseVisualStyleBackColor = true;
@@ -210,7 +213,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(269, 387);
+            this.button7.Location = new System.Drawing.Point(113, 387);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(106, 23);
             this.button7.TabIndex = 17;
@@ -220,7 +223,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(166, 387);
+            this.button8.Location = new System.Drawing.Point(32, 387);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 18;
@@ -274,11 +277,40 @@
             this.label5.TabIndex = 23;
             this.label5.Text = " Intensity Factor:";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(226, 387);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(115, 20);
+            this.textBox1.TabIndex = 24;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(347, 387);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(34, 23);
+            this.button10.TabIndex = 25;
+            this.button10.Text = "Go";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(226, 414);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(115, 21);
+            this.comboBox1.TabIndex = 26;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1103, 547);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -338,6 +370,9 @@
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.TextBox textBox1;
+    private System.Windows.Forms.Button button10;
+    private System.Windows.Forms.ComboBox comboBox1;
   }
 }
 

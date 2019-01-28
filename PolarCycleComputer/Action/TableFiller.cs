@@ -117,5 +117,6 @@ namespace PolarCycleComputer.Action
 
       return _hrData;
     }
+
   }
 }

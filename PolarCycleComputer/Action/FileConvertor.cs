@@ -8,31 +8,14 @@ namespace PolarCycleComputer.Action
 {
   public class FileConvertor
   {
-    public string[] SplitString(string text)
-    {
-      var splitString = GetParams();
+    public string[] SplitString(string text) => text.Split(GetParams(), StringSplitOptions.RemoveEmptyEntries);
 
-      var splittedText = text.Split(splitString, StringSplitOptions.RemoveEmptyEntries);
+    public string[] SplitStringByEnter(string text) => text.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-      return splittedText;
-    }
+    public string[] SplitStringBySpace(string text) => string.Join(" ", text.Split().Where(x => x != "")).Split(' ');
 
-    public string[] SplitStringByEnter(string text)
-    {
-      return text.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-    }
-
-    public string[] SplitStringBySpace(string text)
-    {
-      var formattedText = string.Join(" ", text.Split().Where(x => x != ""));
-      return formattedText.Split(' ');
-    }
-
-    public string[] GetParams()
-    {
-      return new string[] { "[Params]", "[Note]", "[IntTimes]", "[IntNotes]",
+    public string[] GetParams() => new string[] { "[Params]", "[Note]", "[IntTimes]", "[IntNotes]",
                 "[ExtraData]", "[LapNames]", "[Summary-123]",
                 "[Summary-TH]", "[HRZones]", "[SwapTimes]", "[Trip]", "[HRData]"};
-    }
   }
 }

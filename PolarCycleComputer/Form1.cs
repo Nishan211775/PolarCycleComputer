@@ -41,7 +41,7 @@ namespace PolarCycleComputer
         _hrData = hrData.ToDictionary(k => k.Key, k => k.Value as List<string>);
 
         var metricsCalculation = new AdvanceMetricsCalculation();
-        
+
         //advance mettrics calculation
         double np = metricsCalculation.CalculateNormalizedPower(hrData);
         label3.Text = "Normalized power = " + Summary.RoundUp(np, 2);
@@ -55,8 +55,19 @@ namespace PolarCycleComputer
         double pb = metricsCalculation.CalculatePowerBalance(hrData);
         label2.Text = "Power balance = " + Summary.RoundUp(pb, 2);
 
-        //smode calculation
         var param = hrData["params"] as Dictionary<string, string>;
+        //header file
+        lblStartTime.Text = lblStartTime.Text + "= " + param["StartTime"];
+        lblInterval.Text = lblInterval.Text + "= " + param["Interval"];
+        lblMonitor.Text = lblMonitor.Text + "= " + param["Monitor"];
+        lblSMode.Text = lblSMode.Text + "= " + param["SMode"];
+        lblDate.Text = lblDate.Text + "= " + param["Date"];
+        lblLength.Text = lblLength.Text + "= " + param["Length"];
+        lblWeight.Text = lblWeight.Text + "= " + param["Weight"];
+
+
+
+        //smode calculation
         var sMode = param["SMode"];
         for (int i = 0; i < sMode.Length; i++)
         {
@@ -229,7 +240,7 @@ namespace PolarCycleComputer
 
     private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
     {
-      
+
     }
 
     private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -268,7 +279,8 @@ namespace PolarCycleComputer
 
         string time = dataGridView1.Rows[index].Cells[5].Value.ToString();
         listTime.Add(time);
-      } catch (Exception ex)
+      }
+      catch (Exception ex)
       {
         Console.WriteLine(ex.Message);
       }
@@ -292,7 +304,8 @@ namespace PolarCycleComputer
 
         dataGridView2.Rows.Clear();
         dataGridView2.Rows.Add(new TableFiller().FillDataInSumaryTable(data, endTime[count - 1], _param));
-      } catch(Exception ex)
+      }
+      catch (Exception ex)
       {
         MessageBox.Show("Please click on reset button first");
       }
@@ -308,6 +321,99 @@ namespace PolarCycleComputer
       //_hrData.ToDictionary(k => k.Key, k => k.Value as object
       var data = _hrData.ToDictionary(k => k.Key, k => k.Value as object);
       new IntervalDetectionForm(data).Show();
+    }
+
+    Dictionary<string, object> list = new Dictionary<string, object>();
+    private void button10_Click(object sender, EventArgs e)
+    {
+      string val = textBox1.Text;
+      int value;
+      if (int.TryParse(val, out value))
+      {
+        int count = 0;
+        try
+        {
+          count = ((List<string>)data["speed"]).Count;
+        }
+        catch (Exception ex)
+        {
+          MessageBox.Show("Please select a row first");
+        }
+
+        int portion = count / Convert.ToInt32(val);
+        
+        var cadenceData = data["cadence"] as List<string>;
+        var altitudeData = data["altitude"] as List<string>;
+        var heartRateData = data["heartRate"] as List<string>;
+        var wattData = data["watt"] as List<string>;
+        var speedData = data["speed"] as List<string>;
+
+        var newCadenceData = new List<string>();
+        var newAltitudeData = new List<string>();
+        var newHeartRateData = new List<string>();
+        var newWattData = new List<string>();
+        var newSpeedData = new List<string>();
+
+        int num = 0;
+        int portionNumber = 0;
+        
+        for (int i = 0; i < count; i++)
+        {
+          num++;
+          newCadenceData.Add(cadenceData[i]);
+          newAltitudeData.Add(altitudeData[i]);
+          newHeartRateData.Add(heartRateData[i]);
+          newWattData.Add(wattData[i]);
+          newSpeedData.Add(speedData[i]);
+
+          if (num == portion)
+          {
+            num = 0;
+            portionNumber++;
+
+            var listData = new Dictionary<string, List<string>>();
+            listData.Add("cadence", newCadenceData);
+            listData.Add("altitude", newAltitudeData);
+            listData.Add("heartRate", newHeartRateData);
+            listData.Add("watt", newWattData);
+            listData.Add("speed", newSpeedData);
+
+            list.Add("data" + portionNumber, listData);
+
+            newCadenceData = new List<string>();
+            newAltitudeData = new List<string>();
+            newHeartRateData = new List<string>();
+            newWattData = new List<string>();
+            newSpeedData = new List<string>();
+          }
+ 
+        }
+
+        comboBox1.Items.Clear();
+        for (int i = 0; i < list.Count; i++)
+        {
+          comboBox1.Items.Add("Portion " + (i + 1));
+        }
+      }
+      else
+      {
+        MessageBox.Show("Please enter a valid number between 0 - 9");
+      }
+
+    }
+
+    private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      int selectedIndex = comboBox1.SelectedIndex + 1;
+
+      dataGridView2.Rows.Clear();
+
+      var a = list["data" + selectedIndex] as Dictionary<string, List<string>>;
+      var b = a.ToDictionary(k => k.Key, k => k.Value as object);
+
+
+      var data = new TableFiller().FillDataInSumaryTable(b, "19:12:15", null);
+      dataGridView2.Rows.Add(data);
     }
   }
 }
